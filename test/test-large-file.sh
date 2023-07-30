@@ -16,7 +16,7 @@ clean_up() {
 
 tmp_dir=$( mktemp -d )
 echo "Using temporary folder ${tmp_dir} (will be cleaned up)"
-trap "clean_up $tmp_dir" EXIT
+#trap "clean_up $tmp_dir" EXIT
 
 # define source and output files
 source="${tmp_dir}/source.txt"
@@ -24,13 +24,13 @@ output="${tmp_dir}/output.txt"
 
 
 # encrypt, decrypt and verify
-echo "Generating 2GB file..."
-dd if=/dev/urandom of=$source bs=2G count=1
+echo "Generating large file..."
+dd if=/dev/zero of=$source bs=1 count=0 seek=$((10*1024*1024*1024))
 
-echo "Encrypting 2GB file..."
+echo "Encrypting large file..."
 ../encrypt.sh "key.pub.pem" "$source"
 
-echo "Decrypting 2GB file..."
+echo "Decrypting large file..."
 ../decrypt.sh "key.priv.pem" "$source.enc" "$output"
 
 echo "Comparing files..."
