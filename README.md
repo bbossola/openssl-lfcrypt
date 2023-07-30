@@ -14,10 +14,9 @@ The proposed solution here consists in using a dynamically generated key to do t
 We have two scripts, encrypt.sh and decrypt.sh. 
 
 - encrypt.sh, given a public key and a file to encrypt, will generate a "$file.enc" and a "$file.key.enc", the first with the contents (encrypted using the self-generated symmetric key) and the second with the encrypted symmetric key (encrypted using the public key). 
-- decrypt.sh, 
+- decrypt.sh, given a privated key and a file to decrypt (a a "$file.enc" and a "$file.key.enc") it will decrypt them to the original format. 
 
-
-
+On the source host you will keep the public key. After encryption, you will have to transfer both generated ".enc" files to the destination host. On the destinaton host, you will need the private key to unencrypt.
 
 
 ### Why some things are weird?
