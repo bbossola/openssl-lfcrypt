@@ -17,3 +17,5 @@ They both has the same structure:
 - it's encrypted
 - it's decripted
 - the original and the decrypted are compared
+
+Please launch the test from the "test" folder.
