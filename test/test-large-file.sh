@@ -16,7 +16,7 @@ clean_up() {
 
 tmp_dir=$( mktemp -d )
 echo "Using temporary folder ${tmp_dir} (will be cleaned up)"
-trap "clean_up $tmp_dir" EXIT
+#trap "clean_up $tmp_dir" EXIT
 
 # define source and output files
 source="${tmp_dir}/source.txt"
