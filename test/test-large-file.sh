@@ -24,13 +24,13 @@ output="${tmp_dir}/output.txt"
 
 
 # encrypt, decrypt and verify
-echo "Generating small file..."
-echo "Hello, OpenSSL pub-key encryption." > $source
+echo "Generating 2GB file..."
+dd if=/dev/urandom of=$source bs=2G count=1
 
-echo "Encrypting small file..."
+echo "Encrypting 2GB file..."
 ../encrypt.sh "key.pub.pem" "$source"
 
-echo "Decrypting small file..."
+echo "Decrypting 2GB file..."
 ../decrypt.sh "key.priv.pem" "$source.enc" "$output"
 
 echo "Comparing files..."

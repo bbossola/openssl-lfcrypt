@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e 
 
 usage() {
 	echo "Usage: ${0} pubkey inputfile"
@@ -22,11 +23,19 @@ if [ ! -f "${2}" ]; then
 	exit 1
 fi
 
+keyfile=${2}.key
 
-openssl smime -encrypt -stream -binary -text -aes256 \
-	-in "${2}" \
-	-out "${2}.enc" \
-	-outform DER "${1}"
+# generate a symmetric key to encrypt the large file
+openssl rand -base64 32 > $keyfile
+
+# encrypt the large file using the symmetric key
+openssl enc -aes-256-cbc -salt -in "${2}" -out "${2}.enc" -pass file:$keyfile
+
+# encrypt the symmetric key so you can safely send it 
+openssl smime -encrypt -binary -aes256 -in $keyfile -out $keyfile.enc -outform DER "${1}"
+
+# destroy the un-encrypted symmetric key so nobody finds it
+shred -u $keyfile
 
 if [ $? -ne 0 ]; then
 	exit 1

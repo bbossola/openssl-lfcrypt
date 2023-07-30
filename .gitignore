@@ -1,2 +1,7 @@
 /*.gz
 /*.zip
+*.new*
+*.old*
+*.enc
+*.bin
+
