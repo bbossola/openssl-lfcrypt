@@ -47,10 +47,10 @@ fi
 
 
 # decrypt the symmetric key with the private key
-openssl smime -decrypt -in $keyfile.enc -binary -inform DEM -inkey "${1}" -out $keyfile
+openssl11 smime -decrypt -in $keyfile.enc -binary -inform DEM -inkey "${1}" -out $keyfile
 
 # decrypt the large file usign the simmetric key
-openssl enc -d -aes-256-cbc -in "${2}" -out "${OUT_FILENAME}" -pass file:$keyfile
+openssl11 enc -d -aes-256-cbc -in "${2}" -out "${OUT_FILENAME}" -pass file:$keyfile
 
 if [ $? -ne 0 ]; then
 	exit 1
