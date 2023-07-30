@@ -26,13 +26,13 @@ fi
 keyfile=${2}.key
 
 # generate a symmetric key to encrypt the large file
-openssl rand -base64 32 > $keyfile
+openssl11u rand -base64 32 > $keyfile
 
 # encrypt the large file using the symmetric key
-openssl enc -aes-256-cbc -salt -in "${2}" -out "${2}.enc" -pass file:$keyfile
+openssl11u enc -aes-256-cbc -salt -in "${2}" -out "${2}.enc" -pass file:$keyfile
 
 # encrypt the symmetric key so you can safely send it 
-openssl smime -encrypt -binary -aes256 -in $keyfile -out $keyfile.enc -outform DER "${1}"
+openssl11u smime -encrypt -binary -aes256 -in $keyfile -out $keyfile.enc -outform DER "${1}"
 
 # destroy the un-encrypted symmetric key so nobody finds it
 shred -u $keyfile
